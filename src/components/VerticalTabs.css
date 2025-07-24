@@ -1,0 +1,16 @@
+.custom-tab {
+    transition: all 0.3s ease;
+}
+
+.custom-tab:hover,
+.custom-tab.active {
+    background-color: #d70077 !important;
+    color: #fff !important;
+}
+
+.custom-tab::after{
+    height: 0 !important;
+}
+.Change_heading{
+    color: #d70077;
+}

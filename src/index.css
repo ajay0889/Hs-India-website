@@ -1,0 +1,56 @@
+@font-face {
+  font-family: Satisfy;
+  src: url('./assets/fonts/Satisfy/Satisfy-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('./assets/fonts/Inter/Inter-VariableFont_opsz\,wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('./assets/fonts/Inter/Inter-Italic-VariableFont_opsz\,wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: italic;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6, strong, b {
+  font-family: 'Satisfy', serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+p, li, span, div, a, label, input, textarea, button {
+  font-family: 'Inter', Arial, sans-serif;
+}
+.Primary-Button{
+  border-radius: 2rem;
+  background: linear-gradient(90deg, #d70077 0%, #d29a39 100%);
+  border: none;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.Primary-Button:hover{
+  background: linear-gradient(90deg, #d29a39 0%, #d70077 100%);
+}
+
+.Stats{
+  background-image: url('assets/stats_bg.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.StatsOverlay{
+  background: rgb(255, 255, 255, 90%);
+}
+.Padding-Top{
+  padding-top: 7rem;
+}

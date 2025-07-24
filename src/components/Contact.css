@@ -1,0 +1,32 @@
+.hs-contact-title {
+  color: #d70077;
+  font-weight: 700;
+  font-family: 'Satisfy', serif;
+}
+.hs-social a{
+  color: #d70077;
+    font-size: 2rem;
+    margin-right: 0.5rem;
+    transition: color 0.2s;
+    display: inline-block;
+}
+.hs-social a:hover{
+  color: #d29a39;
+}
+.connected{
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: 'Satisfy', serif;
+}
+.text-Primary{
+  color: #d70077;
+  text-decoration: none;
+}
+.text-Primary:hover{
+  color: #d29a39;
+}
+.ContactDetails h5{
+  font-family: 'Inter', Arial, sans-serif;
+  font-weight: 500;
+  font-size: 1rem;
+}
