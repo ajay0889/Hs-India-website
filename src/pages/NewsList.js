@@ -21,7 +21,7 @@ function NewsList() {
       const res = await axios.get(`${getApiBase()}/api/news`);
       setNews(res.data);
     } catch (err) {
-      console.error("❌ Failed to fetch news:", err);
+      // Handle error silently or show user-friendly message
     }
   };
 
@@ -34,7 +34,7 @@ function NewsList() {
       setNews(news.filter((item) => item.id !== id));
       alert("🗑️ News deleted successfully");
     } catch (err) {
-      console.error("❌ Failed to delete news:", err);
+      alert("Failed to delete news. Please try again.");
     }
   };
 

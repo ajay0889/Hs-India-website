@@ -9,6 +9,8 @@ const routes = [
   { url: '/our-business', changefreq: 'weekly', priority: 0.7 },
   { url: '/products', changefreq: 'weekly', priority: 0.7 },
   { url: '/media', changefreq: 'weekly', priority: 0.6 },
+  { url: '/news', changefreq: 'daily', priority: 0.8 },
+  { url: '/blogs', changefreq: 'daily', priority: 0.8 },
   { url: '/disclaimer', changefreq: 'yearly', priority: 0.3 },
   { url: '/privacy-policy', changefreq: 'yearly', priority: 0.3 },
   { url: '/cookie-policy', changefreq: 'yearly', priority: 0.3 },

@@ -74,7 +74,6 @@ function NewsDetail() {
 
         setError(null);
       } catch (err) {
-        console.error(err);
         setError("Failed to load news. Please try again later.");
         setNews(null);
         setRelatedNews([]);

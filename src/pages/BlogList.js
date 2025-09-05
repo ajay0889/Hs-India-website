@@ -21,7 +21,7 @@ function BlogList() {
       const res = await axios.get(`${getApiBase()}/api/blogs`);
       setBlogs(res.data);
     } catch (err) {
-      console.error("❌ Failed to fetch blogs:", err);
+      // Handle error silently or show user-friendly message
     }
   };
 
@@ -34,7 +34,7 @@ function BlogList() {
       setBlogs(blogs.filter((item) => item.id !== id));
       alert("🗑️ Blog deleted successfully");
     } catch (err) {
-      console.error("❌ Failed to delete blog:", err);
+      alert("Failed to delete blog. Please try again.");
     }
   };
 

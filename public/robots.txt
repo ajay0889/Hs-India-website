@@ -6,6 +6,11 @@ Disallow: /favicon.ico
 Disallow: /manifest.json
 Disallow: /logo192.png
 Disallow: /logo512.png
+Disallow: /admin/
+Disallow: /newslist
+Disallow: /bloglist
+Disallow: /editor
+Disallow: /blog-editor
 Allow: /
 
 Sitemap: https://hs-india.com/sitemap.xml

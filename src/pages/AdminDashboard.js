@@ -29,7 +29,6 @@ const AdminDashboard = () => {
       setRecentBlogs(blogsRes.data.slice(-5).reverse()); // Show 5 latest blogs
       setLoading(false);
     } catch (error) {
-      console.error("Error fetching dashboard data:", error);
       setLoading(false);
     }
   };

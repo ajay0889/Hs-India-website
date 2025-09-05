@@ -1,6 +1,7 @@
 {
   "short_name": "HS India",
-  "name": "HS India - Women Ethnic Wear",
+  "name": "HS India - Premium Women Ethnic Wear & Fashion",
+  "description": "HS India is a leading brand in ethnic fashion, offering premium sarees, lehengas, and traditional wear. Discover our latest collections and stay updated with fashion trends.",
   "icons": [
     {
       "src": "favicon.ico",
@@ -21,5 +22,9 @@
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#d70077",
-  "background_color": "#ffffff"
+  "background_color": "#ffffff",
+  "orientation": "portrait-primary",
+  "categories": ["fashion", "shopping", "lifestyle"],
+  "lang": "en",
+  "scope": "/"
 }

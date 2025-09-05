@@ -177,7 +177,6 @@ function TiptapField({
       editor.chain().focus().setImage({ src: url }).run();
       setUploadError("");
     } catch (err) {
-      console.error("Upload error:", err);
       setUploadError(err?.message || "Image upload failed");
     } finally {
       setIsUploading(false);
@@ -494,7 +493,6 @@ function NewsEditor() {
       // To auto-redirect after update as well, you can also call:
       // navigate("/newslist");
     } catch (err) {
-      console.error(err);
       showModal(
         "error",
         isEditMode ? "Update Failed" : "Save Failed",
@@ -574,7 +572,6 @@ function NewsEditor() {
         }
       }
     }
-    console.error("Upload failed after trying endpoints:", candidates, lastErr);
     throw new Error(
       `Upload failed: ${lastErr?.response?.data?.error || lastErr?.message || "Unknown error"}`
     );
