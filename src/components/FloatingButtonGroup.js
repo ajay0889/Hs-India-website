@@ -1,17 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import './FloatingButtonGroup.css';
+import { useState, useEffect } from 'react';
+import '../styles/FloatingButtonGroup.css';
 import RequestQuoteModal from './RequestQuoteModal';
 
 const buttons = [
   {
     icon: <i className="bi bi-ui-checks-grid"></i>,
-    label: 'Request Quote',
-  },
-  {
-    icon: <i className="bi bi-file-earmark-text"></i>,
-    label: 'Download Catalog',
-    link: '/catalog',
-  },
+    label: 'Partner With Us',
+  }
 ];
 
 const FloatingButtonGroup = () => {
@@ -45,14 +40,6 @@ const FloatingButtonGroup = () => {
           <span className="floating-btn-fixed-icon">{buttons[0].icon}</span>
           <span className="floating-btn-fixed-label">{buttons[0].label}</span>
         </button>
-        <a
-          href={buttons[1].link}
-          className="floating-btn-fixed"
-          style={{ bottom: `250px` }}
-        >
-          <span className="floating-btn-fixed-icon">{buttons[1].icon}</span>
-          <span className="floating-btn-fixed-label">{buttons[1].label}</span>
-        </a>
         {showScrollTop && (
           <button
             className="floating-btn-fixed floating-btn-scrolltop"

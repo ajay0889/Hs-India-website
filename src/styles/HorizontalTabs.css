@@ -1,0 +1,73 @@
+.tab-anim {
+  transition: opacity 0.3s ease-in-out;
+}
+
+.anim-out {
+  opacity: 0;
+}
+
+.anim-in {
+  opacity: 1;
+}
+
+.custom-tab {
+  font-weight: 500;
+  color: #333;
+}
+
+.custom-tab.active {
+  color: #000;
+  border-color: #000;
+}
+.product_card img {
+  width: 100%;
+  height: 450px; /* Fixed height */
+  object-fit: cover;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.product_card img:hover {
+  transform: scale(1.05);
+}
+
+.product_card {
+  border-radius: 8px;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease;
+}
+
+.product_card:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    background: #d70077;
+    color: #fff;
+}
+
+.product-name {
+    margin: 10px 0 0;
+    font-size: 1rem;
+}
+.product_card img {
+  aspect-ratio: 4 / 5; /* width : height */
+  width: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.ProductCategories .swiper-button-prev,.ProductCategories .swiper-button-next{
+  width: 25px;           
+  height: 25px;
+  color: #fff;            
+  background-color: #d70077;
+  transform: none; 
+  border-radius: 50%;
+}
+.ProductCategories .swiper-wrapper {
+  padding: 0 0 30px 0;
+}
+
+/* Make arrow icons smaller */
+.ProductCategories .swiper-button-next::after,
+.ProductCategories .swiper-button-prev::after {
+  font-size: 12px;        /* default ~20–24px */
+}
+

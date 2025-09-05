@@ -1,53 +1,79 @@
-import React from 'react';
-import './BlogSection.css';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
+import '../styles/BlogSection.css';
+import { getApiBase, withBase } from '../config/api';
 
-const blogs = [
-  {
-    image: require('../assets/blog_three.jpg'),
-    title: 'Bridal Beyond Borders: Why HS India Is Winning Global Hearts',
-    link: '#',
-  },
-  {
-    image: require('../assets/banner-four.jpg'),
-    title: 'Fusion Fever: How Indo-Western Styles Are Taking Over Modern Wardrobes',
-    link: '#',
-  },
-  {
-    image: require('../assets/blog_two.jpg'),
-    title: "Inside the Fabric: Why Every HS India Piece Tells a Story",
-    link: '#',
-  },
-];
+const BlogSection = () => {
+  const [blogs, setBlogs] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-const BlogSection = () => (
-  <section className="hs-blog-section py-5">
-    <div className="container">
-      <div className="row">
-        <div className="col-12">
-          <h1 className="custom-heading">Stories Woven with Culture & Couture</h1>
-          <hr className="custom-divider" />
-        </div>
-      </div>
-      <div className="row g-4 justify-content-center">
-        {blogs.map((blog, idx) => (
-          <div className="col-12 col-md-6 col-lg-4" key={idx}>
-            <div className="hs-blog-card">
-              <div className="hs-blog-img-wrap">
-                <img src={blog.image} alt={blog.title} className="hs-blog-img" loading="lazy" />
-              </div>
-              <div className="hs-blog-content">
-                <h5 className="hs-blog-title">{blog.title}</h5>
-                <Link to={`/blog/${idx}`} className="hs-blog-link">
-                  Read More <span className="hs-blog-arrow">&rarr;</span>
-                </Link>
-              </div>
-            </div>
+  useEffect(() => {
+    const BASE = getApiBase();
+    axios
+      .get(`${BASE}/api/blogs`)
+      .then((res) => {
+        const data = Array.isArray(res.data) ? res.data : [];
+        const normalized = data.map((blog) => ({
+          id: blog.id || blog._id || blog.slug,
+          slug: blog.slug || String(blog.id || blog._id || ''),
+          title: blog.title || '',
+          image: blog.image ? withBase(blog.image) : null,
+        }));
+        setBlogs(normalized.reverse());
+      })
+      .catch(() => setBlogs([]))
+      .finally(() => setLoading(false));
+  }, []);
+
+  return (
+    <section className="hs-blog-section py-5">
+      <div className="container">
+        <div className="row">
+          <div className="col-12">
+            <h1 className="custom-heading">Stories Woven with Culture & Couture</h1>
+            <hr className="custom-divider" />
           </div>
-        ))}
+        </div>
+        
+        {loading && (
+          <div className="col-12 text-center">
+            <p>Loading blogs...</p>
+          </div>
+        )}
+
+        {!loading && blogs.length === 0 && (
+          <div className="col-12 text-center">
+            <p>No blogs available.</p>
+          </div>
+        )}
+
+        {!loading && blogs.length > 0 && (
+          <div className="row g-4 justify-content-center">
+            {blogs.slice(0, 3).map((blog) => (
+              <div className="col-12 col-md-6 col-lg-4" key={blog.id}>
+                <div className="hs-blog-card">
+                  <div className="hs-blog-img-wrap">
+                    {blog.image ? (
+                      <img src={blog.image} alt={blog.title} className="hs-blog-img" loading="lazy" />
+                    ) : (
+                      <div style={{height: '220px', background: '#f3f4f6'}} />
+                    )}
+                  </div>
+                  <div className="hs-blog-content">
+                    <h3 className="hs-blog-title">{blog.title}</h3>
+                  <Link to={`/blogs/${blog.slug}`} className="hs-blog-link">
+                    Read More <span className="hs-blog-arrow">&rarr;</span>
+                  </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
+};
 
 export default BlogSection; 

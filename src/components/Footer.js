@@ -1,5 +1,4 @@
-import React from 'react';
-import './Footer.css';
+import '../styles/Footer.css';
 import hsLogo from '../assets/hs-logo-white.png';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -11,7 +10,7 @@ const Footer = () => {
         <div className="container">
           <div className="row justify-content-center align-items-start">
             <div className="col-12 col-md-2 d-flex mb-4 mb-md-0">
-              <img src={hsLogo} alt="HS India Logo" className="hs-footer-logo" />
+              <Link to="/" ><img src={hsLogo} alt="HS India Logo" className="hs-footer-logo" /></Link>
             </div>
             <div className="col-12 col-md-10">
               <div className="row">
@@ -20,8 +19,9 @@ const Footer = () => {
                   <ul className="hs-footer-list">
                     <li><Link to="/about" className={location.pathname === '/about' ? 'active' : ''} aria-current={location.pathname === '/about' ? 'page' : undefined}>About Us</Link></li>
                     <li><Link to="/our-business" className={location.pathname === '/our-business' ? 'active' : ''} aria-current={location.pathname === '/our-business' ? 'page' : undefined}>Our Business</Link></li>
+                    <li><Link to="/blogs" className={location.pathname === '/blogs' ? 'active' : ''} aria-current={location.pathname === '/blogs' ? 'page' : undefined}>Blogs</Link></li>
+                    <li><Link to="/news" className={location.pathname === '/news' ? 'active' : ''} aria-current={location.pathname === '/news' ? 'page' : undefined}>News</Link></li>
                     <li><Link to="/media" className={location.pathname === '/media' ? 'active' : ''} aria-current={location.pathname === '/media' ? 'page' : undefined}>Media</Link></li>
-                    <li>Stories</li>
                     <li><Link to="/contact" className={location.pathname === '/contact' ? 'active' : ''} aria-current={location.pathname === '/contact' ? 'page' : undefined}>Contact Us</Link></li>
                   </ul>
                   <div className="hs-footer-heading mt-4">Connect With us</div>

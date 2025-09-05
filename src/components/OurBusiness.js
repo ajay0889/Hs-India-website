@@ -1,5 +1,4 @@
-import React from 'react';
-import './OurBusiness.css';
+import '../styles/OurBusiness.css';
 import SEO from './SEO';
 import {Link} from 'react-router-dom';
 import business from '../assets/business.jpg'
@@ -18,7 +17,7 @@ const OurBusiness = () => (
         <div className="row align-items-center">
           <div className="col-lg-6 mb-4 mb-lg-0">
             <p className="ourbusiness-lead mb-4">At HS India, we don’t just create fashion — we build businesses around it. Our strength lies in a vertically integrated model that connects design, manufacturing, wholesale, and global retail under one powerful brand ecosystem.</p>
-            <Link to={`/`} className="hs-blog-link">
+            <Link to={`/contact`} className="hs-blog-link">
                 Partner With Us <span className="hs-blog-arrow">&rarr;</span>
               </Link>
           </div>

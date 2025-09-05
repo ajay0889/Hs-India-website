@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import './FilterGallery.css';
+import { useState } from 'react';
+import '../styles/FilterGallery.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import album_one from '../assets/album/album_one.jpg';
 import album_two from '../assets/album/album_two.jpg';

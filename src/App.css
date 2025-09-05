@@ -51,7 +51,7 @@
 .test-box {
   padding: 1rem;
   margin: 1rem;
-  background-color: #3b82f6;
+  background-color: #d70077;
   color: white;
   border-radius: 0.5rem;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
@@ -59,7 +59,7 @@
 }
 
 .test-box:hover {
-  background-color: #2563eb;
+  background-color: #d70077;
 }
 
 .main-content {
@@ -82,10 +82,10 @@
 }
 
 .card-title {
-  color: #007bff;
+  color: #d70077;
   font-weight: 600;
 }
 
 .card-text {
-  color: #6c757d;
+  color: #000000;
 }

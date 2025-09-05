@@ -1,14 +1,17 @@
-import React, { useEffect } from 'react'; 
+import { useEffect } from 'react'; 
+import { useNavigate } from 'react-router-dom';
 import Swiper from 'swiper/bundle';
 import 'swiper/css/bundle';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './FullPageSlider.css';
+import '../styles/FullPageSlider.css';
 import { ArrowRightIcon, ArrowLeftIcon } from '@heroicons/react/24/solid';
 import bridalVideo from '../assets/banner-four.jpg';
 import bannerOne from '../assets/banner_one.jpg';
 import bannerTwo from '../assets/banner_two.jpg';
 
 const FullPageSlider = () => {
+  const navigate = useNavigate();
+
   useEffect(() => {
     new Swiper('.swiper-container-h', {
       direction: 'horizontal',
@@ -21,10 +24,6 @@ const FullPageSlider = () => {
       speed: 1600,
       rtl: true,
       loop: true,
-      // mousewheel: {
-      //   eventsTarget: '.swiper-slide',
-      //   sensitivity: 1,
-      // },
       keyboard: {
         enabled: true,
         onlyInViewport: true,
@@ -53,6 +52,7 @@ const FullPageSlider = () => {
       title: 'Fashion In Motion',
       disc: 'At HS India, tradition meets innovation. Every thread we weave celebrates heritage, style, and timeless grace—trusted by generations across the globe.',
       buttonText: 'Explore Collections',
+      buttonLink: '/products',
     },
     {
       type: 'image',
@@ -60,7 +60,8 @@ const FullPageSlider = () => {
       tag: 'FROM FACTORY TO FASHION FLOOR',
       title: 'Your Global Wholesale Partner',
       disc: 'Join 10,000+ retailers and exporters across 50+ countries powered by HS India’s unmatched variety and quality.',
-      buttonText: 'Become a Reseller',
+      buttonText: 'Become a Seller',
+      buttonLink: '/contact',
     },
     {
       type: 'image',
@@ -69,8 +70,15 @@ const FullPageSlider = () => {
       title: 'Style You Can Shop Today',
       disc: 'Discover ready-to-ship sarees, lehengas, gowns, and Indo-western outfits crafted for every occasion. Premium designs. Fast shipping. Pan-India & worldwide delivery.',
       buttonText: 'Shop Now',
+      buttonLink: '/products',
     },
   ];
+
+  const handleClick = (link) => {
+    if (link) {
+      navigate(link); // navigates to slide's link
+    }
+  };
 
   return (
     <section className="creative-fullpage--slider">
@@ -80,7 +88,7 @@ const FullPageSlider = () => {
             {slideData.map((slide, index) => (
               <div className="swiper-slide" key={index}>
                 <div className="slider-inner" data-swiper-parallax="100">
-                <div className="slider-overlay"></div>
+                  <div className="slider-overlay"></div>
                   {slide.type === 'image' && (
                     <img src={slide.src} alt="full_screen-image" />
                   )}
@@ -89,11 +97,13 @@ const FullPageSlider = () => {
                       <p className="tag">{slide.tag}</p>
                       <p className="title">{slide.title}</p>
                     </div>
-                    <p className="disc">
-                      {slide.disc}
-                    </p>
+                    <p className="disc">{slide.disc}</p>
                     <div className="creative-btn--wrap">
-                      <button className="creative-slide--btn" type="button">
+                      <button
+                        className="creative-slide--btn"
+                        type="button"
+                        onClick={() => handleClick(slide.buttonLink)}
+                      >
                         <div className="creative-btn--circle">
                           <div className="circle">
                             <div className="circle-fill"></div>

@@ -1,0 +1,16 @@
+.ourbusiness-title, .ourbusiness-segment-title {
+    color: #d70077;
+    font-weight: 700;
+    font-family: 'Satisfy', serif;
+    font-size: 2.5rem;
+  }
+  .ourbusiness-lead {
+    font-size: 1.2rem;
+    color: #333;
+    font-family: 'Inter', Arial, sans-serif;
+  }
+  .ourbusiness-btn { background: linear-gradient(90deg, #d70077 0%, #d29a39 100%); color: #fff; border: none; border-radius: 2rem; padding: 0.7rem 2.2rem; font-weight: 600; font-size: 1.1rem; text-decoration: none; transition: background 0.2s; }
+  .ourbusiness-btn:hover { background: linear-gradient(90deg, #d29a39 0%, #d70077 100%); color: #fff; }
+  .ourbusiness-segment-card { background: #fff; border-radius: 1.5rem; box-shadow: 0 2px 12px rgba(215,0,119,0.04); }
+  .ourbusiness-brands { background: #fff; }
+  @media (max-width: 768px) { .ourbusiness-title { font-size: 1.5rem; } .ourbusiness-segment-card { padding: 1.2rem; } } 

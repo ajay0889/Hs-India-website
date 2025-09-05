@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import Swiper from "swiper/bundle";
 import "swiper/css/bundle";
-import "./FlexSlider.css";
+import "../styles/FlexSlider.css";
 
 const FlexSlider = () => {
   useEffect(() => {
@@ -67,45 +67,45 @@ const FlexSlider = () => {
 
 const slides = [
   {
-    title: "Surya Sarees",
+    title: "House Of Surya",
     description:
-      "A staple in Chandni Chowk and beyond, Surya Sarees offers timeless sarees and lehengas for generations of celebration—and modern expansion.",
-    link: "../assets/surya_sarees.jpg",
+      "A staple in Chandni Chowk and beyond, House Of Surya offers timeless sarees and lehengas for generations of celebration—and modern expansion.",
+    link: "https://www.houseofsurya.com/",
     className: "swiper-slide--one",
   },
   {
     title: "Raagwaas",
     description:
       "A tribute to India’s timeless artistry. Raagwaas is crafted for connoisseurs and stores that value deep-rooted design and cultural storytelling.",
-    link: "../assets/raagwaas.jpg",
+    link: "https://raagwaas.com/",
     className: "swiper-slide--two",
   },
   {
     title: "Siyonee",
     description:
       "Playful. Vibrant. Loved online. Siyonee is perfect for resellers and fashion retailers seeking trending ethnicwear that moves fast.",
-    link: "../assets/siyonee.jpg",
+    link: "https://www.instagram.com/siyoneeclothing/?hl=en",
     className: "swiper-slide--four",
   },
   {
     title: "Surya Sarees",
     description:
       "A staple in Chandni Chowk and beyond, Surya Sarees offers timeless sarees and lehengas for generations of celebration—and modern expansion.",
-    link: "../assets/sur.jpg",
+    link: "https://www.houseofsurya.com/",
     className: "swiper-slide--three",
   },
   {
     title: "Raagwaas",
     description:
       "A tribute to India’s timeless artistry. Raagwaas is crafted for connoisseurs and stores that value deep-rooted design and cultural storytelling.",
-    link: "../assets/raag.jpg",
+    link: "https://raagwaas.com/",
     className: "swiper-slide--five",
   },
   {
     title: "Siyonee",
     description:
       "Playful. Vibrant. Loved online. Siyonee is perfect for resellers and fashion retailers seeking trending ethnicwear that moves fast.",
-    link: "../assets/siyo.jpg",
+    link: "https://www.instagram.com/siyoneeclothing/?hl=en",
     className: "swiper-slide--six",
   },
 ];

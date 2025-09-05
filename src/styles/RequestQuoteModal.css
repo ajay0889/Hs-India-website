@@ -1,0 +1,239 @@
+.rq-modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rq-modal {
+  background: #fff;
+  border-radius: 12px;
+  max-width: 800px;
+  width: 95vw;
+  padding: 36px 32px 28px 32px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  position: relative;
+  font-family: 'Inter', Arial, sans-serif;
+}
+
+.rq-modal-close {
+  position: absolute;
+  top: 18px;
+  right: 22px;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #d70077;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.rq-modal-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 0.2em;
+  color: #111;
+  text-align: left;
+}
+
+.rq-brand {
+  color: #d70077;
+}
+
+.rq-modal-underline {
+  width: 80px;
+  height: 4px;
+  background: #d70077;
+  border-radius: 2px;
+  margin: 0.2em 0 1.2em 0;
+}
+
+.rq-modal-desc {
+  color: #444;
+  font-size: 1.08rem;
+  margin-bottom: 1.6em;
+  line-height: 1.6;
+}
+
+.rq-modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.rq-modal-row {
+  display: flex;
+  gap: 1em;
+}
+
+.rq-modal-row input {
+  flex: 1;
+}
+
+.rq-field-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.rq-modal-form input,
+.rq-modal-form select {
+  padding: 0.9em 1em;
+  border: 1.5px solid #eee;
+  border-radius: 7px;
+  font-size: 1.08rem;
+  font-family: inherit;
+  background: #fafafa;
+  outline: none;
+  transition: border 0.2s;
+}
+
+.rq-modal-form input:focus,
+.rq-modal-form select:focus {
+  border: 1.5px solid #d70077;
+}
+
+.rq-modal-form input.error,
+.rq-modal-form select.error {
+  border: 1.5px solid #dc3545;
+  background: #fff5f5;
+}
+
+.rq-modal-form input.error:focus,
+.rq-modal-form select.error:focus {
+  border: 1.5px solid #dc3545;
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+.rq-error-text {
+  color: #dc3545;
+  font-size: 0.85rem;
+  margin-top: 0.3em;
+  font-weight: 500;
+}
+
+.rq-modal-submit {
+  background: #111;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 7px;
+  padding: 0.9em 1em;
+  cursor: pointer;
+  transition: background 0.2s
+}
+
+.rq-modal-submit:hover {
+  background: #d70077;
+  color: #fff;
+}
+
+.rq-modal-submit:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.rq-message {
+  margin-top: 1em;
+  padding: 0.8em;
+  border-radius: 5px;
+  text-align: center;
+  font-weight: 500;
+}
+
+.rq-message.success {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.rq-message.error {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* Responsive styles */
+@media (max-width: 600px) {
+  .rq-modal {
+    max-width: 98vw;
+    width: 98vw;
+    padding: 20px 8px 18px 8px;
+  }
+  .rq-modal-title {
+    font-size: 1.4rem;
+  }
+  .rq-modal-underline {
+    width: 50px;
+    height: 3px;
+    margin-bottom: 0.7em;
+  }
+  .rq-modal-desc {
+    font-size: 0.98rem;
+    margin-bottom: 1em;
+  }
+  .rq-modal-row {
+    flex-direction: column;
+    gap: 0.7em;
+  }
+  .rq-modal-form input,
+  .rq-modal-form select {
+    font-size: 0.98rem;
+    padding: 0.7em 0.7em;
+  }
+  .rq-modal-submit {
+    font-size: 1rem;
+    padding: 0.7em 0;
+  }
+  .rq-modal-close {
+    top: 10px;
+    right: 12px;
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .rq-modal {
+    padding: 8px 2vw 8px 2vw;
+  }
+  .rq-modal-title {
+    font-size: 1.1rem;
+  }
+  .rq-modal-underline {
+    width: 30px;
+    height: 2px;
+  }
+} 
+
+/* For desktop, make modal a bit narrower and add more padding */
+@media (min-width: 900px) {
+  .rq-modal-form {
+    gap: 0.5em;
+  }
+  .rq-modal-row {
+    gap: 1.3em;
+  }
+}
+
+/* For mobile, ensure all fields are stacked and full width */
+@media (max-width: 600px) {
+  .rq-modal-row {
+    flex-direction: column;
+    gap: 0.7em;
+  }
+  .rq-modal-form input,
+  .rq-modal-form select {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .rq-modal-title {
+    font-size: 1.2rem;
+  }
+  .rq-modal-desc {
+    font-size: 0.95rem;
+  }
+} 

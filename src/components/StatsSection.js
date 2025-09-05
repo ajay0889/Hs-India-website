@@ -13,7 +13,7 @@ const StatsSection = () => {
       icon: 'bi-briefcase-fill',
     },
     {
-      number: 50000,
+      number: 15000,
       suffix: '+',
       label: 'Happy Customers',
       icon: 'bi-emoji-smile-fill',

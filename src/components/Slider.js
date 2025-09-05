@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Swiper from 'swiper/bundle';
 import 'swiper/css/bundle';
-import './Slider.css';
+import '../styles/Slider.css';
 
 const slides = [
   {

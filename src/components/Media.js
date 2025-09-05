@@ -1,5 +1,4 @@
-import React from 'react';
-import './Media.css';
+import '../styles/Media.css';
 import SEO from './SEO';
 import MediaImage from '../assets/album/album_nine.jpg';
 

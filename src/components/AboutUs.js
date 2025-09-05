@@ -1,5 +1,4 @@
-import React from 'react';
-import './AboutUs.css';
+import '../styles/AboutUs.css';
 import SEO from './SEO';
 
 const AboutUs = () => (
@@ -9,7 +8,7 @@ const AboutUs = () => (
       <div className="container">
         <div className="row">
           <div className="col-12">
-            <h1 className="custom-heading">Where Heritage Meets Haute Couture</h1>
+            <h1 className="custom-heading">Where Heritage Meets Couture</h1>
             <hr className="custom-divider" />
           </div>
         </div>

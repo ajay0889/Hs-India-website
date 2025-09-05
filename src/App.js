@@ -1,5 +1,4 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar';
 import FullPageSlider from './components/FullPageSlider';
@@ -28,27 +27,63 @@ import Disclaimer from './components/Disclaimer';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import CookiePolicy from './components/CookiePolicy';
 import StatsSection from './components/StatsSection';
+import CookieConsentBanner from './components/CookieConsentBanner';
+import ProductsPage from './components/Products';
+import NewsDetail from './pages/NewsDetail';
+import NewsList from "../src/pages/NewsList";
+import NewsEditor from "./pages/NewsEditor";
+import AllNews from "./pages/AllNews";
+import AllBlogs from "./pages/AllBlogs";
+import BlogDetail from "./pages/BlogDetail";
+import BlogEditor from "./pages/BlogEditor";
+import BlogList from "./pages/BlogList";
+import { AuthProvider } from "./context/AuthContext";
+import RequireAuth from "./components/RequireAuth";
+import AdminLogin from "./pages/AdminLogin";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminNavbar from "./components/AdminNavbar";
+import AdminFooter from "./components/AdminFooter";
 
 function App() {
   return (
     <BrowserRouter>
     <ScrollToTop />
-      <Navbar />
+    <AuthProvider>
       <Routes>
-        <Route path="/" element={<><SEO title="HS India - Women Ethnic Wear" description="HS India is a leader in ethnic fashion, blending tradition with innovation. Explore our sarees, lehengas, and more." /><FullPageSlider /><HorizontalTabs /><StatsSection /><News /><FlexSlider /><VerticalTabs /><CTASection /><OurPeople /><StackedCards /><OurVision /><OurValues /><BlogSection /></>} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/about" element={<><AboutUs /><OurVision /> <OurValues /> <OurPeople /> </>} />
-        <Route path="/our-business" element={<> <OurBusiness /> <CTASection /><StackedCards /></>} />
-        <Route path="/media" element={<><Media /><FilterGallery /></>} />
-        <Route path="/disclaimer" element={<Disclaimer />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/cookie-policy" element={<CookiePolicy />} />
+        <Route path="/admin" element={<Navigate to="/admin/login" replace />} />
+        <Route path="/admin/dashboard" element={<RequireAuth><AdminNavbar /><AdminDashboard /><AdminFooter /></RequireAuth>} />
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/newslist" element={<RequireAuth><AdminNavbar /><NewsList /><AdminFooter /></RequireAuth>} />
+        <Route path="/bloglist" element={<RequireAuth><AdminNavbar /><BlogList /><AdminFooter /></RequireAuth>} />
+        <Route path="/editor" element={<RequireAuth><AdminNavbar /><NewsEditor /><AdminFooter /></RequireAuth>} />
+        <Route path="/blog-editor" element={<RequireAuth><AdminNavbar /><BlogEditor /><AdminFooter /></RequireAuth>} />
+        <Route path="/" element={<><Navbar /><SEO title="HS India - Women Ethnic Wear" description="HS India is a leader in ethnic fashion, blending tradition with innovation. Explore our sarees, lehengas, and more." /><FullPageSlider /><HorizontalTabs /><StatsSection /><News /><FlexSlider /><VerticalTabs /><CTASection /><OurPeople /><StackedCards /><OurVision /><OurValues /><BlogSection /> </>} />
+        <Route path="/contact" element={<><Navbar /><Contact /></>} />
+        <Route path="/about" element={<><Navbar /><AboutUs /><OurVision /> <OurValues /> <OurPeople /> </>} />
+        <Route path="/our-business" element={<><Navbar /><OurBusiness /> <CTASection /><StackedCards /></>} />
+        <Route path="/products" element={<><Navbar /><ProductsPage /></>} />
+        <Route path="/media" element={<><Navbar /><Media /><FilterGallery /></>} />
+        <Route path="/disclaimer" element={<><Navbar /><Disclaimer /></>} />
+        <Route path="/privacy-policy" element={<><Navbar /><PrivacyPolicy /></>} />
+        <Route path="/cookie-policy" element={<><Navbar /><CookiePolicy /></>} />
+        <Route path="/news" element={<><Navbar /><AllNews /></>} />
+        <Route path="/news/:slug" element={<><Navbar /><NewsDetail /></>} />
+        <Route path="/blogs" element={<><Navbar /><AllBlogs /></>} />
+        <Route path="/blogs/:slug" element={<><Navbar /><BlogDetail /></>} />
         {/* Add other routes here as needed */}
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<><Navbar /><NotFound /></>} />
       </Routes>
-      <CTATwo />
-      <Footer />
-      <FloatingButtonGroup />
+      
+      {/* Public site footer components - only show on public routes */}
+      <Routes>
+        <Route path="/admin/*" element={null} />
+        <Route path="/newslist" element={null} />
+        <Route path="/bloglist" element={null} />
+        <Route path="/editor" element={null} />
+        <Route path="/blog-editor" element={null} />
+        <Route path="*" element={<><CTATwo /><Footer /><FloatingButtonGroup /><CookieConsentBanner /></>} />
+      </Routes>
+    </AuthProvider>
     </BrowserRouter>
   );
 }

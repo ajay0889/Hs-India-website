@@ -1,5 +1,4 @@
-import React from 'react';
-import './StackedCards.css';
+import '../styles/StackedCards.css';
 import wholesale from '../assets/wholesale.jpg'
 import retail from '../assets/retail.jpg'
 import manufac from '../assets/manufac.jpg'
@@ -17,7 +16,7 @@ const cards = [
         We empower thousands of resellers and B2B clients with high-margin ethnicwear that sells. Our wholesale brands offer unmatched variety, trending designs, and reliable inventory for every season.<br /><br />
         <strong>Our Wholesale Verticals:</strong>
         <ul style={{ marginTop: '0.5em', marginBottom: 0 }}>
-          <li><strong>House of Surya</strong> – India's trusted name for bulk ethnicwear sourcing</li>
+          <li><strong>HS Wholesale</strong> – India's trusted name for bulk ethnicwear sourcing</li>
           <li><strong>Surya Ethnic Fashion</strong> – Trend-driven collections for the modern marketplace</li>
         </ul>
       </span>
@@ -52,7 +51,7 @@ const cards = [
         Our retail brands cater to a wide spectrum of customers—from everyday festive shoppers to premium bridal buyers. Each brand reflects a unique design philosophy with mass and niche appeal.<br /><br />
         <strong>Our Retail Brands:</strong>
         <ul style={{ marginTop: '0.5em', marginBottom: 0 }}>
-          <li><strong>Surya Sarees</strong> – Classic elegance for all occasions</li>
+          <li><strong>House Of Surya</strong> – Classic elegance for all occasions</li>
           <li><strong>Siyonee</strong> – Fusionwear for today's bold woman</li>
           <li><strong>Raagwaas</strong> – Regal couture for the traditional bride</li>
         </ul>

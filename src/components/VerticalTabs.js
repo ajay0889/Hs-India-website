@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Container, Row, Col, Nav } from "react-bootstrap";
-import "./VerticalTabs.css";
+import "../styles/VerticalTabs.css";
 
 const tabs = [
   {

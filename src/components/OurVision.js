@@ -1,4 +1,3 @@
-import React from 'react';
 import './OurPeople';
 import peopleImg from '../assets/vision.jpg';
 import { Link } from 'react-router-dom';
@@ -17,7 +16,7 @@ const OurVision = () => (
               <p className="our-people-desc mb-4">
                 At HS India, our vision is to blend timeless tradition with modern innovation, setting new standards in ethnic fashion. We aspire to empower individuals and communities by celebrating heritage, fostering creativity, and leading with integrity. Our commitment is to create a world where every occasion is adorned with elegance, and every customer experiences the pride of Indian craftsmanship.
               </p>
-              <Link to={`/`} className="hs-blog-link">
+              <Link to={`/about`} className="hs-blog-link">
                 Read More <span className="hs-blog-arrow">&rarr;</span>
               </Link>
             </div>

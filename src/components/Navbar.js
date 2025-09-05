@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './Navbar.css';
+import '../styles/Navbar.css';
 import { Link, useLocation } from 'react-router-dom';
 
 const menu = [
@@ -16,6 +16,11 @@ const menu = [
   {
     label: 'Our Business',
     href: '/our-business',
+    icon: null,
+  },
+  {
+    label: 'Our Products',
+    href: '/products',
     icon: null,
   },
   {

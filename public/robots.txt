@@ -1,3 +1,11 @@
-# https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Disallow: /static/
+Disallow: /assets/
+Disallow: /index.html
+Disallow: /favicon.ico
+Disallow: /manifest.json
+Disallow: /logo192.png
+Disallow: /logo512.png
+Allow: /
+
+Sitemap: https://hs-india.com/sitemap.xml

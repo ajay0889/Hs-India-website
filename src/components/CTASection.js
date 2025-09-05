@@ -1,4 +1,3 @@
-import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const bgImage = require('../assets/news_one.jpeg');

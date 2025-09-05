@@ -1,5 +1,3 @@
-import React from 'react';
-
 const reasons = [
   'Unmatched craftsmanship and quality assurance',
   'Innovative designs blending tradition and modernity',
