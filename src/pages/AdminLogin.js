@@ -1,80 +1,145 @@
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import '../styles/admin.css';
 
 function AdminLogin() {
   const navigate = useNavigate();
   const location = useLocation();
   const { login } = useAuth();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [submitting, setSubmitting] = useState(false);
+  const [form, setForm] = useState({
+    email: "",
+    password: ""
+  });
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
+  const [errors, setErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
 
   const from = location.state?.from?.pathname || "/admin/dashboard";
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm({ ...form, [name]: value });
+    
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors({ ...errors, [name]: '' });
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+    
+    if (!form.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(form.email)) {
+        newErrors.email = 'Invalid email format';
+      }
+    }
+    
+    if (!form.password) {
+      newErrors.password = 'Password is required';
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (submitting) return;
-    setSubmitting(true);
+    setMessage('');
+    
+    if (!validateForm()) {
+      setMessage('Please fix the errors below');
+      return;
+    }
+    
+    setLoading(true);
+    
     try {
-      await login(email, password);
+      await login(form.email, form.password);
       navigate(from, { replace: true });
     } catch (err) {
-      alert("Invalid credentials");
+      setMessage('Invalid credentials');
     } finally {
-      setSubmitting(false);
+      setLoading(false);
     }
   };
 
   return (
-    <>
-      <div className="container">
-        <div className="row justify-content-center">
-          <div className="col-12 col-md-6">
-            <div className="card p-4 shadow-sm">
-              <h2 className="mb-4">Admin Login</h2>
-              <form onSubmit={handleSubmit}>
-                <div className="mb-3">
-                  <label className="form-label">Email</label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    value={email}
-                    placeholder="hsindia_admin@hsindia.com"
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="mb-3">
-                  <label className="form-label">Password</label>
-                  <input
-                    type="password"
-                    className="form-control"
-                    value={password}
-                    placeholder="Hs-India#123"
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
-                </div>
-                <button type="submit" className="btn btn-primary" disabled={submitting}>
-                  {submitting ? "Signing in..." : "Sign In"}
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-link ms-2"
-                  onClick={() => {
-                    setEmail("hsindia_admin@hsindia.com");
-                    setPassword("Hs-India#123");
-                  }}
-                >
-                  Use default superadmin
-                </button>
-              </form>
-            </div>
+    <div className="admin-login-container">
+      <div className="admin-login-card">
+        <div className="admin-login-header">
+          <h2>Admin Login</h2>
+          <p>Sign in to your HS India admin account</p>
+        </div>
+        
+        <form onSubmit={handleSubmit} className="admin-login-form">
+          <div className="form-group">
+            <label htmlFor="email">Email Address</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={form.email}
+              onChange={handleChange}
+              className={errors.email ? 'error' : ''}
+              placeholder="Enter your email"
+            />
+            {errors.email && <span className="error-text">{errors.email}</span>}
           </div>
+          
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <div className="password-input-container">
+              <input
+                type={showPassword ? "text" : "password"}
+                id="password"
+                name="password"
+                value={form.password}
+                onChange={handleChange}
+                className={errors.password ? 'error' : ''}
+                placeholder="Enter your password"
+              />
+              <button
+                type="button"
+                className="password-toggle-btn"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? "🙈" : "👁️"}
+              </button>
+            </div>
+            {errors.password && <span className="error-text">{errors.password}</span>}
+          </div>
+          
+          <button 
+            type="submit" 
+            className="admin-login-btn"
+            disabled={loading}
+          >
+            {loading ? 'Signing in...' : 'Sign In'}
+          </button>
+          
+          {message && (
+            <div className={`admin-message ${message.includes('Invalid') ? 'error' : 'success'}`}>
+              {message}
+            </div>
+          )}
+        </form>
+        
+        <div className="admin-login-footer">
+          <p>
+            Don't have an account?{' '}
+            <Link to="/admin/register" className="admin-link">
+              Create Admin Account
+            </Link>
+          </p>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

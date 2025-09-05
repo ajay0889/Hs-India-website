@@ -40,6 +40,7 @@ import BlogList from "./pages/BlogList";
 import { AuthProvider } from "./context/AuthContext";
 import RequireAuth from "./components/RequireAuth";
 import AdminLogin from "./pages/AdminLogin";
+import AdminRegister from "./pages/AdminRegister";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminNavbar from "./components/AdminNavbar";
 import AdminFooter from "./components/AdminFooter";
@@ -53,6 +54,7 @@ function App() {
         <Route path="/admin" element={<Navigate to="/admin/login" replace />} />
         <Route path="/admin/dashboard" element={<RequireAuth><AdminNavbar /><AdminDashboard /><AdminFooter /></RequireAuth>} />
         <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin/register" element={<AdminRegister />} />
         <Route path="/newslist" element={<RequireAuth><AdminNavbar /><NewsList /><AdminFooter /></RequireAuth>} />
         <Route path="/bloglist" element={<RequireAuth><AdminNavbar /><BlogList /><AdminFooter /></RequireAuth>} />
         <Route path="/editor" element={<RequireAuth><AdminNavbar /><NewsEditor /><AdminFooter /></RequireAuth>} />

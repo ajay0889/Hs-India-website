@@ -9,12 +9,15 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename); // points to backend/ directory
-const JWT_SECRET = process.env.JWT_SECRET || "dev_secret_change_me";
+const JWT_SECRET = process.env.JWT_SECRET || "dev_secret_change_me_in_production";
 
-app.use(cors());
+app.use(cors({
+  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  credentials: true
+}));
 app.use(express.json({ limit: "10mb" }));
 app.use("/uploads", express.static(path.join(__dirname, "uploads"))); // serve uploaded images from backend/uploads
 
@@ -102,17 +105,157 @@ app.post("/api/uploads", upload.single("file"), (req, res) => {
   }
 });
 
-// ---- Simple in-memory users (seeded superadmin) ----
+// ---- Simple in-memory users ----
 const users = [];
 
-const seedSuperadmin = () => {
-  const email = "hsindia_admin@hsindia.com";
-  if (users.find((u) => u.email === email)) return;
-  const passwordHash = bcrypt.hashSync("Hs-India#123", 10);
-  users.push({ id: "1", email, passwordHash, role: "superadmin" });
+// Initialize with first admin if no users exist
+const initializeFirstAdmin = () => {
+  if (users.length === 0) {
+    const email = process.env.ADMIN_EMAIL;
+    const password = process.env.ADMIN_PASSWORD;
+    
+    if (!email || !password) {
+      console.warn("⚠️  No initial admin created. Set ADMIN_EMAIL and ADMIN_PASSWORD environment variables to create the first admin.");
+      console.warn("   Or use the /api/auth/setup endpoint to create the first admin.");
+      return;
+    }
+    
+    const passwordHash = bcrypt.hashSync(password, 10);
+    users.push({ 
+      id: "1", 
+      email, 
+      passwordHash, 
+      role: "superadmin",
+      createdAt: new Date().toISOString(),
+      isActive: true
+    });
+    console.log("✅ First admin created with email:", email);
+  }
 };
 
-seedSuperadmin();
+initializeFirstAdmin();
+
+// Auth: Setup (Create first admin if none exists)
+app.post("/api/auth/setup", async (req, res) => {
+  try {
+    // Only allow setup if no users exist
+    if (users.length > 0) {
+      return res.status(400).json({ message: "Admin already exists. Use login instead." });
+    }
+    
+    const { email, password, name } = req.body || {};
+    
+    // Validation
+    if (!email || !password || !name) {
+      return res.status(400).json({ message: "Email, password, and name are required" });
+    }
+    
+    if (password.length < 6) {
+      return res.status(400).json({ message: "Password must be at least 6 characters" });
+    }
+    
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ message: "Invalid email format" });
+    }
+    
+    // Create first admin (superadmin)
+    const passwordHash = bcrypt.hashSync(password, 10);
+    const newAdmin = {
+      id: "1",
+      email,
+      passwordHash,
+      name,
+      role: "superadmin",
+      createdAt: new Date().toISOString(),
+      isActive: true
+    };
+    
+    users.push(newAdmin);
+    
+    // Generate token
+    const token = jwt.sign({ sub: newAdmin.id, role: newAdmin.role }, JWT_SECRET, { expiresIn: "7d" });
+    
+    return res.status(201).json({ 
+      message: "First admin created successfully", 
+      token, 
+      user: { 
+        id: newAdmin.id, 
+        email: newAdmin.email, 
+        name: newAdmin.name, 
+        role: newAdmin.role 
+      } 
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Server error" });
+  }
+});
+
+// Auth: Register Admin
+app.post("/api/auth/register", async (req, res) => {
+  try {
+    const { email, password, confirmPassword, name } = req.body || {};
+    
+    // Validation
+    if (!email || !password || !confirmPassword || !name) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+    
+    if (password !== confirmPassword) {
+      return res.status(400).json({ message: "Passwords do not match" });
+    }
+    
+    if (password.length < 6) {
+      return res.status(400).json({ message: "Password must be at least 6 characters" });
+    }
+    
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({ message: "Invalid email format" });
+    }
+    
+    // Check if user already exists
+    if (users.find((u) => u.email === email)) {
+      return res.status(400).json({ message: "Admin with this email already exists" });
+    }
+    
+    // Create new admin
+    const passwordHash = bcrypt.hashSync(password, 10);
+    // First user becomes superadmin, others become regular admin
+    const userRole = users.length === 0 ? "superadmin" : "admin";
+    const newAdmin = {
+      id: Date.now().toString(),
+      email,
+      passwordHash,
+      name,
+      role: userRole,
+      createdAt: new Date().toISOString(),
+      isActive: true
+    };
+    
+    users.push(newAdmin);
+    
+    // Generate token
+    const token = jwt.sign({ sub: newAdmin.id, role: newAdmin.role }, JWT_SECRET, { expiresIn: "7d" });
+    
+    return res.status(201).json({ 
+      message: "Admin registered successfully", 
+      token, 
+      user: { 
+        id: newAdmin.id, 
+        email: newAdmin.email, 
+        name: newAdmin.name,
+        role: newAdmin.role 
+      } 
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Server error" });
+  }
+});
 
 // Auth: Login
 app.post("/api/auth/login", async (req, res) => {
@@ -121,10 +264,11 @@ app.post("/api/auth/login", async (req, res) => {
     if (!email || !password) return res.status(400).json({ message: "Email and password required" });
     const user = users.find((u) => u.email === email);
     if (!user) return res.status(401).json({ message: "Invalid credentials" });
+    if (!user.isActive) return res.status(401).json({ message: "Account is deactivated" });
     const ok = await bcrypt.compare(password, user.passwordHash);
     if (!ok) return res.status(401).json({ message: "Invalid credentials" });
     const token = jwt.sign({ sub: user.id, role: user.role }, JWT_SECRET, { expiresIn: "7d" });
-    return res.json({ token, user: { id: user.id, email: user.email, role: user.role } });
+    return res.json({ token, user: { id: user.id, email: user.email, name: user.name, role: user.role } });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Server error" });
@@ -408,6 +552,24 @@ app.get("/api/quotes", (req, res) => {
     res.json(quoteList);
   } catch (err) {
     res.status(500).json({ error: "Failed to fetch quote requests" });
+  }
+});
+
+// Get all admins (for superadmin only)
+app.get("/api/admins", (req, res) => {
+  try {
+    // In a real app, you'd verify the user is a superadmin
+    const adminList = users.map(user => ({
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      role: user.role,
+      createdAt: user.createdAt,
+      isActive: user.isActive
+    }));
+    res.json(adminList);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch admins" });
   }
 });
 
