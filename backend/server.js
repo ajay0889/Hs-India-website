@@ -14,8 +14,14 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename); // points to backend/ directory
 const JWT_SECRET = process.env.JWT_SECRET || "dev_secret_change_me_in_production";
 
+// Add request logging for debugging
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+  next();
+});
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  origin: process.env.FRONTEND_URL || 'https://hs-india.com',
   credentials: true
 }));
 app.use(express.json({ limit: "10mb" }));
@@ -70,6 +76,90 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // ---- ROUTES ----
+
+// Root route for testing
+app.get("/", (req, res) => {
+  res.json({ 
+    message: "HS-India API Server is running!", 
+    version: "1.0.0",
+    endpoints: {
+      news: "/api/news",
+      blogs: "/api/blogs", 
+      quotes: "/api/quotes",
+      auth: "/api/auth/login"
+    }
+  });
+});
+
+// API root route (for cPanel /api path)
+app.get("/api", (req, res) => {
+  res.json({ 
+    message: "HS-India API Server is running!", 
+    version: "1.0.0",
+    endpoints: {
+      news: "/api/news",
+      blogs: "/api/blogs", 
+      quotes: "/api/quotes",
+      auth: "/api/auth/login"
+    }
+  });
+});
+
+// Alternative routes without /api prefix (for cPanel routing)
+app.get("/news", (req, res) => {
+  try {
+    const newsList = readData();
+    res.json(newsList);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch news" });
+  }
+});
+
+app.get("/blogs", (req, res) => {
+  try {
+    const blogList = readBlogData();
+    res.json(blogList);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch blogs" });
+  }
+});
+
+app.get("/quotes", (req, res) => {
+  try {
+    const quoteList = readQuoteData();
+    res.json(quoteList);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch quote requests" });
+  }
+});
+
+// Also add routes with /api prefix for direct access
+app.get("/api/news", (req, res) => {
+  try {
+    const newsList = readData();
+    res.json(newsList);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch news" });
+  }
+});
+
+app.get("/api/blogs", (req, res) => {
+  try {
+    const blogList = readBlogData();
+    res.json(blogList);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch blogs" });
+  }
+});
+
+app.get("/api/quotes", (req, res) => {
+  try {
+    const quoteList = readQuoteData();
+    res.json(quoteList);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch quote requests" });
+  }
+});
 
 // Upload endpoint for Tiptap images
 app.post("/api/uploads", upload.single("file"), (req, res) => {
@@ -573,7 +663,32 @@ app.get("/api/admins", (req, res) => {
   }
 });
 
+
+// Catch-all route for debugging (must be last)
+app.use((req, res) => {
+  console.log(`❌ Route not found: ${req.method} ${req.originalUrl}`);
+  res.status(404).json({ 
+    error: "Route not found", 
+    method: req.method,
+    url: req.originalUrl,
+    message: "Check the server logs to see what routes are being hit"
+  });
+});
+
 // ---- start server ----
-app.listen(PORT, () => {
-  console.log(`✅ Server running on http://localhost:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`✅ Server running on port ${PORT}`);
+  console.log(`✅ Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`✅ Frontend URL: ${process.env.FRONTEND_URL || 'https://hs-india.com'}`);
+  console.log(`✅ Available routes:`);
+  console.log(`   GET /`);
+  console.log(`   GET /api`);
+  console.log(`   GET /news`);
+  console.log(`   GET /blogs`);
+  console.log(`   GET /quotes`);
+  console.log(`   GET /api/news`);
+  console.log(`   GET /api/blogs`);
+  console.log(`   GET /api/quotes`);
+  console.log(`   POST /api/auth/login`);
+  console.log(`   POST /api/uploads`);
 });
